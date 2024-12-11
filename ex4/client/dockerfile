@@ -1,0 +1,10 @@
+FROM alpine
+WORKDIR /usr/src/app
+RUN apk add --no-cache gcc make libc-dev
+RUN apk add --no-cache tcpdump
+
+COPY --from=scripts . /scripts
+COPY . /usr/src/app
+# RUN ln -s /usr/bin/gcc /usr/bin/cc
+RUN make
+CMD ["./main"]

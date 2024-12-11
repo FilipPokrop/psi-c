@@ -1,0 +1,60 @@
+services:
+  client:
+    hostname: client
+    build: 
+      context: client
+      additional_contexts:
+        - scripts=./scripts
+    networks:
+      - psi
+    volumes:
+      # - ./client:/usr/src/app
+      - ./log:/usr/src/app/log
+    env_file:
+      - .env
+    command: ./run.sh 
+
+  server:
+    hostname: server 
+    build:
+      context: server
+      additional_contexts:
+        - scripts=./scripts
+    networks:
+      - psi
+    volumes:
+      # - ./server:/usr/src/app
+      - ./log:/usr/src/app/log
+    env_file:
+      - .env
+    command: ./run.sh 
+  # client:
+  #   hostname: client
+  #   build: client
+  #   networks:
+  #     - psi
+  #   command: ./main -s 2048
+  #   volumes:
+  #     # - ./client:/usr/src/app
+  #     - ./log:/usr/src/app/log
+  #
+  # server:
+  #   hostname: server 
+  #   build: server
+  #   networks:
+  #     - psi
+  #   # command: ./main -s 512
+  #   command: ./run.sh
+  #   volumes:
+  #   #   - ./server:/usr/src/app
+  #     - ./log:/usr/src/app/log
+  #   env_file:
+  #     - .env
+  #   environment:
+  #    - CMD=./main -s 4 -w 3
+  #
+networks:
+  psi:
+    driver: bridge
+    name: psi
+    external: true

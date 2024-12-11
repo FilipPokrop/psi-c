@@ -1,0 +1,54 @@
+services:
+  client:
+    hostname: client
+    build: 
+      context: client
+      additional_contexts:
+        - scripts=./scripts
+    networks:
+      - psi
+    volumes:
+      # - ./client:/usr/src/app
+      - ./log:/usr/src/app/log
+    env_file:
+      - .env
+    command: ./run.sh 
+
+  server:
+    hostname: server 
+    build:
+      context: server
+      additional_contexts:
+        - scripts=./scripts
+    networks:
+      - psi
+    volumes:
+      # - ./server:/usr/src/app
+      - ./log:/usr/src/app/log
+    env_file:
+      - .env
+    command: ./run.sh 
+    cap_add:
+      - NET_ADMIN
+  # client:
+  #   hostname: client
+  #   build: client
+  #   networks:
+  #     - psi
+  #   # volumes:
+  #     # - ./client:/usr/src/app
+  #
+  # server:
+  #   hostname: server 
+  #   build: server
+  #   networks:
+  #     - psi
+    # volumes:
+    #   - ./server:/usr/src/app
+
+networks:
+  psi:
+    driver: bridge
+    name: psi
+    external: true
+    # attachable: true

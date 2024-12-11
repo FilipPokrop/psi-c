@@ -1,0 +1,15 @@
+FROM alpine 
+# FROM gcc:latest 
+WORKDIR /usr/src/app
+RUN apk add --no-cache gcc make libc-dev tcpdump
+# RUN apt-get update
+# RUN apt-get install  make -y
+# RUN apt-get install  tcpdump  -y
+
+COPY --from=scripts . /scripts
+COPY . .
+# RUN ln -s /usr/bin/gcc /usr/bin/cc
+# RUN cmake -Bbuild
+# RUN cmake --build build
+RUN make clean all
+CMD ["./main"]
