@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CMD="./main"
+[ -n "$CMD" ] || CMD="./main"
 
 /scripts/run_tcpdump.sh client
 
